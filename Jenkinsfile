@@ -41,8 +41,8 @@ pipeline {
                         cd dev
                         echo "test"
                         echo "${NGINX_NODE2}"
-                        ssh  ec2-user@${NGINX_NODE2} 'pwd'
-                       
+                        ssh -o StrictHostKeyChecking=no ec2-user@${NGINX_NODE2} 'pwd'
+                                             
                         """
                         
                     }
