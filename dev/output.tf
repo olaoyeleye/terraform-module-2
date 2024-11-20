@@ -1,7 +1,17 @@
+data "terraform_remote_state" "remote"{
+  backend="s3"
+  config = {
+    bucket = "kensko"
+    key    = "env/dev/terraform.tfstate"
+    region = "eu-west-2"
+  }
+}
+
+
 output "nginx" {
-    value =aws_instance.node1.public_dns
+    value =data.terraform_remote_state.remote.public_dns
 }
 
 output "python" {
-    value =aws_instance.node2.public_dns
+    value =data.terraform_remote_state.remote.public_dns
 }
