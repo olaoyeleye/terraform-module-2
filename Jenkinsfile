@@ -26,13 +26,6 @@ pipeline {
                 }
             }
         }  
-        stage('Terraform Destroy ') {
-            steps {
-                sh '''
-                cd dev
-                terraform destroy -var 'node1=nginx' -var 'node2=python-node' -auto-approve
-                '''
-            }
-        }   
+       
     }
 }
