@@ -7,7 +7,8 @@ pipeline {
     stages {
         stage ('Manage Nginx') {
             environment {
-                  NGINX_NODE2 = sh(script: "cd dev; terraform output  |  grep nginx | awk -F\\=  '{print \$2}'",returnStdout: true).trim()
+                  //NGINX_NODE2 = sh(script: "cd dev; terraform output  |  grep nginx | awk -F\\=  '{print \$2}'",returnStdout: true).trim()
+                  NGINX_NODE2 =data.terraform_remote_state.remote.public_dns
             }
             steps {
                 script {

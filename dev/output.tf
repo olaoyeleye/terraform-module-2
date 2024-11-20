@@ -8,10 +8,10 @@ data "terraform_remote_state" "remote"{
 }
 
 
-output "nginx" {
-    value =data.terraform_remote_state.remote.public_dns
-}
+#output "nginx" {
+#    value =data.terraform_remote_state.remote.public_dns
+#}
 
-output "python" {
-    value =data.terraform_remote_state.remote.public_dns
-}
+#output "python" {
+#    value =data.terraform_remote_state.remote.public_dns
+#}
