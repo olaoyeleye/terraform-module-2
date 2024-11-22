@@ -46,7 +46,12 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo yum install -y python3'
                         
                         scp -o StrictHostKeyChecking=no hello.py ec2-user@${PYTHON_NODE}:/tmp/
-                        cd ../code
+                        #cd ../code
+                        #ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} ' sudo yum install -y ufw && sudo ufw allow 65432/tcp'
+                        ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo install -y netstat && ss -tuln'
+                        
+                        ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo lsof -i :'
+                        
                         ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'python3 /tmp/hello.py'
                         """
                         
