@@ -39,9 +39,7 @@ pipeline {
                         sh """
                         env
                         cd dev
-                        echo "test"
-                        echo "${NGINX_NODE2}"
-                        ssh -o StrictHostKeyChecking=no ec2-user@${NGINX_NODE2} 'pwd'
+                        ssh -o StrictHostKeyChecking=no ec2-user@${NGINX_NODE2} '"sudo yum install -y nginx" && sudo systemctl start nginx'
                                              
                         """
                         
