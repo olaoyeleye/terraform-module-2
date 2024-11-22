@@ -46,6 +46,7 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo yum install -y python3'
                         
                         scp -o StrictHostKeyChecking=no hello.py ec2-user@${PYTHON_NODE}:/tmp/
+                        cd ../code
                         ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'python3 /tmp/hello.py'
                         """
                         
