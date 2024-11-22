@@ -31,15 +31,18 @@ pipeline {
         }
         stage ('Manage Nginx') {
             environment {
-                  NGINX_NODE2 = sh(script: "cd dev; terraform output  |  grep nginx | awk -F\\=  '{print \$2}'",returnStdout: true).trim()
+                  NGINX_NODE = sh(script: "cd dev; terraform output  |  grep nginx | awk -F\\=  '{print \$2}'",returnStdout: true).trim()
+                  PYTHON_NODE = sh(script: "cd dev; terraform output  |  grep python | awk -F\\=  '{print \$2}'",returnStdout: true).trim()                   
+                       
             }
             steps {
                 script {
                     sshagent (credentials : ['SSH-TO-TERRA-Nodes']) {
                         sh """
                         cd dev
-                        ssh -o StrictHostKeyChecking=no ec2-user@${NGINX_NODE2} 'sudo yum install -y nginx && sudo systemctl start nginx'
-                                             
+                        ssh -o StrictHostKeyChecking=no ec2-user@${NGINX_NODE} 'sudo yum install -y nginx && sudo systemctl start nginx'
+                        ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo yum install -y python3'
+                        
                         """
                         
                     }
