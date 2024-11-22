@@ -42,7 +42,7 @@ pipeline {
                         cd dev
                         ssh -o StrictHostKeyChecking=no ec2-user@${NGINX_NODE} 'sudo yum install -y nginx && sudo systemctl start nginx'
                         #ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo yum update && sudo yum install -y ufw && sudo ufw allow out 22/tcp'
-                        ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT'
+                        #ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT'
                         ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo yum install -y python3'
                         
                         scp -o StrictHostKeyChecking=no hello.py ec2-user@${PYTHON_NODE}:/tmp/
