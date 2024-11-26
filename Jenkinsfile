@@ -85,8 +85,8 @@ pipeline {
         post{
             success{
                 script {
-                    //withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_ID')]) {
-                    withEnv(["SLACK_TOKEN=${SLACK_TOKEN}"]) {
+                    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
+                   //withEnv(["SLACK_TOKEN=${SLACK_TOKEN}"]) {
                         sh """
                         curl -X POST \
                         -H 'Authorization: Bearer ${SLACK_TOKEN}' \
@@ -99,8 +99,8 @@ pipeline {
             }
             failure{
                 script{
-                    //withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_ID')]) {
-                    withEnv(["SLACK_TOKEN=${SLACK_TOKEN}"]) {
+                    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
+                    //withEnv(["SLACK_TOKEN=${SLACK_TOKEN}"]) {
                         sh """
                         curl -X POST \
                         -H 'Authorization: Bearer ${SLACK_TOKEN}' \
