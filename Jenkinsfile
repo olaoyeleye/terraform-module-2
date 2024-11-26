@@ -74,7 +74,9 @@ pipeline {
             steps {
                 script { 
                         sh """  
-                        pytest hello.py      /
+                        pip install --upgrade pip
+                        pip install pytest
+                        pytest /tmp/code/hello.py      
 
                         """                        
                     }
@@ -85,7 +87,8 @@ pipeline {
         post{
             success{
                 script {
-                    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
+                    echo "Success"
+                    /*withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
                    //withEnv(["SLACK_TOKEN=${SLACK_TOKEN}"]) {
                         sh """
                         curl -X POST \
@@ -95,11 +98,12 @@ pipeline {
                         https://slack.com//api/chat.postMessage 
                             """
                             }
-                }
+                }*/
             }
             failure{
                 script{
-                    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
+                    echo "Failed"
+                    /*withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
                     //withEnv(["SLACK_TOKEN=${SLACK_TOKEN}"]) {
                         sh """
                         curl -X POST \
@@ -109,7 +113,7 @@ pipeline {
                         https://slack.com//api/chat.postMessage 
                             """
                             }
-                }
+                }*/
             }
             always {
             echo 'I have finished'
