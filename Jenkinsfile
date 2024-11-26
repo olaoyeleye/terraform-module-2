@@ -90,7 +90,7 @@ pipeline {
                         curl -X POST \
                         -H 'Authorization: Bearer ${KUNLE_SLACK_ID}' \
                         -H 'Content-Type: application/json' \
-                        --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye''s Project 10 Pipeline build was SUCCESSFUL...yeah!!!"}'  \
+                        --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye\'s Project 10 Pipeline build was SUCCESSFUL...yeah!!!"}'  \
                         https://slack.com//api/chat.postMessage 
                             """
                             }
@@ -103,7 +103,7 @@ pipeline {
                         curl -X POST \
                         -H 'Authorization: Bearer ${KUNLE_SLACK_ID}' \
                         -H 'Content-Type: application/json' \
-                        --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye''s Project 10 Pipeline build FAILED...Check"}'  \
+                        --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye\'s Project 10 Pipeline build FAILED...Check"}'  \
                         https://slack.com//api/chat.postMessage 
                             """
                             }
