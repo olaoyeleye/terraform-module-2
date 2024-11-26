@@ -74,13 +74,11 @@ pipeline {
             steps {
                 script { 
                         sh """  
-                        apt-get install -y sudo
-                        sudo apt-get update -y
-                        sudo pt-get install -y python3-pip
-                        sudo pip3 install --upgrade pip
-                        sudo pip3 install pytest
-
-                        sudo pytest /tmp/code/hello.py      
+                        python3 -m venv venv
+                        source venv/bin/activate
+                        pip3 install --upgrade pip3
+                        pip3 install pytest 
+                        pytest /tmp/code/hello.py    
 
                         """                        
                     }
