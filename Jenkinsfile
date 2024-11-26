@@ -98,10 +98,10 @@ pipeline {
             }
             failure{
                 script{
-                    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_ID')]) {
+                    withCredentials ([string (credentialsId: 'KUNLESLACK_TOKEN', variable: 'KUNLESLACK_ID')]) {
                         sh """
                         curl -X POST \
-                        -H 'Authorization: Bearer ${SLACK_ID}' \
+                        -H 'Authorization: Bearer ${KUNLESLACK_ID}' \
                         -H 'Content-Type: application/json' \
                         --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye's Project 10 Pipeline build FAILED...Check"}'  \
                         https://slack.com//api/chat.postMessage 
