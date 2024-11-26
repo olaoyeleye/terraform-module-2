@@ -55,7 +55,14 @@ pipeline {
                         sh """
                         cd dev
                         terraform fmt -check 
+                        echo $?
                         terraform validate
+                        holder=$?
+                        if [ $holder -eq 0 ]; then
+                           echo "Validation successful"
+                        else
+                           echo "Validation failed"
+                        fi
                         """                        
                     }
                 }
