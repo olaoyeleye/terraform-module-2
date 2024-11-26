@@ -97,8 +97,8 @@ pipeline {
                         --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye`s Project 10 Pipeline build was SUCCESSFUL...yeah!!!"}'  \
                         https://slack.com//api/chat.postMessage 
                             """
-                            }
-                }*/
+                            }*/
+                }
             }
             failure{
                 script{
@@ -112,8 +112,8 @@ pipeline {
                         --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye`s Project 10 Pipeline build FAILED...Check"}'  \
                         https://slack.com//api/chat.postMessage 
                             """
-                            }
-                }*/
+                            }*/
+                }
             }
             always {
             echo 'I have finished'
