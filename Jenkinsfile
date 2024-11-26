@@ -49,6 +49,31 @@ pipeline {
                 }
             }
         }
+        stage ('Terraform Format') { 
+            steps {
+                script { 
+                        sh """
+                        cd dev
+                        terraform fmt -check 
+                        terraform validate
+                        """                        
+                    }
+                }
+            }
+        }
+        stage ('Pytest for Unit Testing') { 
+            steps {
+                script { 
+                        sh """  
+                        pytest hello.py                      
+                        //python3 -m pytest --cov=app --cov-fail-under=3 --v
+
+                        """                        
+                    }
+                }
+            }
+        }
+
     }
         post{
             success{
