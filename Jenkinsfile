@@ -86,7 +86,7 @@ pipeline {
             success{
                 script {
                     //withCredentials ([string (credentialsId: 'KUNLE_SLACK_TOKEN', variable: 'KUNLE_SLACK_ID')]) {
-                    withEnv(["SLACK_TOKEN=${KUNLE_SLACK_ID}"]) {
+                    withEnv(["SLACK_TOKEN=${KUNLE_SLACK_TOKEN}"]) {
                         sh """
                         curl -X POST \
                         -H 'Authorization: Bearer ${SLACK_TOKEN}' \
@@ -100,7 +100,7 @@ pipeline {
             failure{
                 script{
                     //withCredentials ([string (credentialsId: 'KUNLE_SLACK_TOKEN', variable: 'KUNLE_SLACK_ID')]) {
-                    withEnv(["SLACK_TOKEN=${KUNLE_SLACK_ID}"]) {
+                    withEnv(["SLACK_TOKEN=${KUNLE_SLACK_TOKEN}"]) {
                         sh """
                         curl -X POST \
                         -H 'Authorization: Bearer ${SLACK_TOKEN}' \
