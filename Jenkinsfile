@@ -41,23 +41,48 @@ pipeline {
                         sh """
                         cd dev
                         ssh -o StrictHostKeyChecking=no ec2-user@${NGINX_NODE} 'sudo yum install -y nginx && sudo systemctl start nginx'
-                        #ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo yum update && sudo yum install -y ufw && sudo ufw allow out 22/tcp'
-                        #ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT'
-                        ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo yum install -y python3'
-                        
-                        scp -o StrictHostKeyChecking=no hello.py ec2-user@${PYTHON_NODE}:/tmp/
-                        #ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} ' sudo yum install -y ufw && sudo ufw allow 65432/tcp'
-                        #ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo install netstat && ss -tuln'
-                        
-                        ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} ' echo $PATH && which python3'
-                        ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'pwd'
-                        ssh -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'python3 /tmp/hello.py'
+                        scp  -r -o StrictHostKeyChecking=no ../code ec2-user@${PYTHON_NODE}:/tmp
+                        ssh  -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo yum install python3 -y; sudo cp /tmp/code/python_app.service /etc/systemd/system; sudo systemctl daemon-reload; sudo systemctl restart python_app.service'
                         """
                         
                     }
                 }
             }
-        }  
-       
+        }
     }
+        post{
+            success{
+                script {
+                    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_ID')]) {
+                        sh """
+                        curl -X POST \
+                        -H 'Authorization: Bearer ${SLACK_ID}' \
+                        -H 'Content-Type: application/json' \
+                        --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye's Project 10 Pipeline build was SUCCESSFUL...yeah!!!"}'  \
+                        https://slack.com//api/chat.postMessage 
+                            """
+                            }
+                }
+            }
+            failure{
+                script{
+                    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_ID')]) {
+                        sh """
+                        curl -X POST \
+                        -H 'Authorization: Bearer ${SLACK_ID}' \
+                        -H 'Content-Type: application/json' \
+                        --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye's Project 10 Pipeline build FAILED...Check"}'  \
+                        https://slack.com//api/chat.postMessage 
+                            """
+                            }
+                }
+            }
+            always {
+            echo 'I have finished'
+            deleteDir() 
+            }
+        }
 }
+            
+       
+    
