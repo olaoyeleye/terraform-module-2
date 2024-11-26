@@ -54,8 +54,7 @@ pipeline {
                 script { 
                         sh """
                         cd dev
-                        terraform fmt -check 
-                        echo "\$?"
+                        terraform fmt -check  
                         terraform validate
                         holder=$?
                         if [ $holder -eq 0 ]; then
@@ -72,8 +71,7 @@ pipeline {
             steps {
                 script { 
                         sh """  
-                        pytest hello.py                      
-                        //python3 -m pytest --cov=app --cov-fail-under=3 --v
+                        pytest hello.py      /
 
                         """                        
                     }
