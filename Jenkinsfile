@@ -60,7 +60,7 @@ pipeline {
                     }
                 }
             }
-        }
+        
         stage ('Pytest for Unit Testing') { 
             steps {
                 script { 
@@ -73,8 +73,7 @@ pipeline {
                 }
             }
         }
-
-    }
+    
         post{
             success{
                 script {
