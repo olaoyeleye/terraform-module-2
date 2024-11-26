@@ -54,22 +54,22 @@ pipeline {
                 script { 
                         sh """
                         cd dev
-                        terraform fmt -check  || echo "Terraform formatting is not correct, but continuing pipeline."
-                        //holder1=\$?
-                        //echo "\$holder1"
-                        //terraform validate
-                        //holder=\$?
-                       // echo "\$holder"
-                       // if [ \$holder -eq 0 ]; then
-                       //    echo "Validation successful"
-                      //  else
-                      //     echo "Validation failed"
-                     //   fi
+                        terraform fmt -check  || echo "Terraform formatting is not correct, but continuing pipeline."                        
                         """                        
                     }
                 }
             }
-        
+        stage ('Terraform Validate') { 
+            steps {
+                script { 
+                        sh """
+                        cd dev
+                        terraform validate  || echo "Terraform Validate is not correct, but continuing pipeline."                        
+                        """                        
+                    }
+                }
+            }
+       
         stage ('Pytest for Unit Testing') { 
             steps {
                 script { 
