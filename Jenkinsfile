@@ -74,8 +74,11 @@ pipeline {
             steps {
                 script { 
                         sh """  
-                        pip install --upgrade pip
-                        pip install pytest
+                        apt-get update -y
+                        apt-get install -y python3-pip
+                        pip3 install --upgrade pip
+                        pip3 install pytest
+                        
                         pytest /tmp/code/hello.py      
 
                         """                        
