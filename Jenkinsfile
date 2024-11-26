@@ -85,10 +85,10 @@ pipeline {
         post{
             success{
                 script {
-                    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_ID')]) {
+                    withCredentials ([string (credentialsId: 'KUNLE_SLACK_TOKEN', variable: 'KUNLE_SLACK_ID')]) {
                         sh """
                         curl -X POST \
-                        -H 'Authorization: Bearer ${SLACK_ID}' \
+                        -H 'Authorization: Bearer ${KUNLE_SLACK_ID}' \
                         -H 'Content-Type: application/json' \
                         --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye's Project 10 Pipeline build was SUCCESSFUL...yeah!!!"}'  \
                         https://slack.com//api/chat.postMessage 
