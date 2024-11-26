@@ -74,6 +74,7 @@ pipeline {
             steps {
                 script { 
                         sh """  
+                        apt-get install -y sudo
                         sudo apt-get update -y
                         sudo pt-get install -y python3-pip
                         sudo pip3 install --upgrade pip
