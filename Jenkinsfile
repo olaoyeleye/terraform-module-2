@@ -55,7 +55,7 @@ pipeline {
                         sh """
                         cd dev
                         terraform fmt -check 
-                        echo $?
+                        echo "\$?"
                         terraform validate
                         holder=$?
                         if [ $holder -eq 0 ]; then
