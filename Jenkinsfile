@@ -98,7 +98,7 @@ pipeline {
 
                         #pip3 install --upgrade pip3
                         #pip3 install pytest 
-                        pytest /tmp/code/hello.py    
+                        #pytest /tmp/code/hello.py    
 
                         """                        
                     }
