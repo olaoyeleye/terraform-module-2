@@ -91,25 +91,18 @@ pipeline {
             when {
                 expression  { params.DEPLOY_OPTIONS == 'APP' || params.DEPLOY_OPTIONS == 'ALL' }
             }
+            environment {
+                PYTHON_NODE = sh(script: "cd dev; terraform output  |  grep python | awk -F\\=  '{print \$2}'",returnStdout: true).trim()        
+            }
             steps {
                 script { 
-                        sh """ 
-                        #apt-get update -y  
-                        #apt-get install -y python3-venv python3-pip 
-
-                        echo "good"
-
-
-                        #python3 -m venv venv
-                        #source venv/bin/activate
-                        #pip install --upgrade pip
-
-                        #pip3 install --upgrade pip3
-                        #pip3 install pytest 
-                        #pytest /tmp/code/hello.py    
-
+                    sshagent (credentials : ['SSH-TO-TERRA-Nodes']) {
+                        sh """                        
+                        ssh  -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo yum update -y; sudo pip3 install --upgrade pip3; pip3 install pytest; pytest /tmp/code/hello.py '
+                
                         """                        
                     }
+                    
                 }
             }
         }
@@ -118,7 +111,7 @@ pipeline {
             success{
                 script {
                     echo "Success"
-                    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
+                   /* withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
                    //withEnv(["SLACK_TOKEN=${SLACK_TOKEN}"]) {
                         sh """
                         curl -X POST \
@@ -127,13 +120,13 @@ pipeline {
                         --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye`s Project 10 Pipeline build was SUCCESSFUL...yeah!!!"}'  \
                         https://slack.com//api/chat.postMessage 
                             """
-                            }
+                            }*/
                 }
             }
             failure{
                 script{
                     echo "Failed"
-                    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
+                    /*withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
                     //withEnv(["SLACK_TOKEN=${SLACK_TOKEN}"]) {
                         sh """
                         curl -X POST \
@@ -142,7 +135,7 @@ pipeline {
                         --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye`s Project 10 Pipeline build FAILED...Check"}'  \
                         https://slack.com//api/chat.postMessage 
                             """
-                            }
+                            }*/
                 }
             }
             always {
