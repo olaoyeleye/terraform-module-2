@@ -73,9 +73,15 @@ pipeline {
         stage ('Pytest for Unit Testing') { 
             steps {
                 script { 
-                        sh """  
+                        sh """ 
+                        apt-get update -y 
+                        apt-get install -y python3-venv python3-pip
+
+
                         python3 -m venv venv
                         source venv/bin/activate
+                        pip install --upgrade pip
+
                         pip3 install --upgrade pip3
                         pip3 install pytest 
                         pytest /tmp/code/hello.py    
@@ -120,6 +126,9 @@ pipeline {
             always {
             echo 'I have finished'
             deleteDir() 
+            sh """
+            rm -rf venv
+            """
             }
         }
 }
