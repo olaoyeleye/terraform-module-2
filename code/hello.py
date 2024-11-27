@@ -19,8 +19,8 @@ def test_code2():
 
 def test_code3():
   """ this is just a vanilla test """
-   print ("assert 4>5 I really dont know if i have fixed it... lol test_code3() successfully executed")
-   
+  print ("test_code3() successfully executed")
+  #assert 4>5 I really dont know if i have fixed it... lol  
 
 def handle_client(conn, addr):
     """Handle communication with a connected client."""
