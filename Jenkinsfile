@@ -79,9 +79,7 @@ pipeline {
                 expression  { params.DEPLOY_OPTIONS == 'APP' || params.DEPLOY_OPTIONS == 'ALL' }
             }
                     stage('Terraform Apply ') {
-            when {
-                expression  { params.DEPLOY_OPTIONS == 'APP' || params.DEPLOY_OPTIONS == 'ALL' }
-            }
+
             steps {
                 script { 
                         sh """
@@ -93,6 +91,9 @@ pipeline {
             }
        
         stage ('Pytest for Unit Testing') { 
+            when {
+                expression  { params.DEPLOY_OPTIONS == 'APP' || params.DEPLOY_OPTIONS == 'ALL' }
+            }
             steps {
                 script { 
                         sh """ 
