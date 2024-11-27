@@ -77,6 +77,8 @@ pipeline {
                         #apt-get update -y  
                         #apt-get install -y python3-venv python3-pip 
 
+                        echo "good"
+
 
                         #python3 -m venv venv
                         #source venv/bin/activate
