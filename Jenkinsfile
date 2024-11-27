@@ -17,7 +17,7 @@ pipeline {
             }
         }
         stage('Terraform Plan ') {
-              when {
+            when {
                 expression  { params.DEPLOY_OPTIONS == 'INFRA' || params.DEPLOY_OPTIONS == 'ALL' }
             }
             steps {
