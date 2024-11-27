@@ -4,6 +4,9 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials ('AWS_SECRET_ACCESS_KEY')
         AWS_ACCESS_KEY_ID =  credentials ('AWS_ACCESS_KEY_ID')
     }
+    parameters{
+        choice(choices:"DEV\nINFRA\nTEST\nALL", description:"Pipeline branches options",name:"DEPLOY_OPTIONS")
+    }
     stages {
         stage('Initialise terraform') {
             steps {
@@ -14,6 +17,9 @@ pipeline {
             }
         }
         stage('Terraform Plan ') {
+              when {
+                expression  { params.DEPLOY_OPTIONS == 'INFRA' || params.DEPLOY_OPTIONS == 'ALL' }
+            }
             steps {
                 sh '''
                 cd dev
@@ -22,6 +28,9 @@ pipeline {
             }
         }  
         stage('Terraform Apply ') {
+            when {
+                expression  { params.DEPLOY_OPTIONS == 'INFRA' || params.DEPLOY_OPTIONS == 'ALL' }
+            }
             steps {
                 sh '''
                 cd dev
@@ -29,7 +38,10 @@ pipeline {
                 '''
             }
         }
-        stage ('Manage Nginx') {
+        stage ('Manage APPs') {
+            when {
+                expression  { params.DEPLOY_OPTIONS == 'APPS' || params.DEPLOY_OPTIONS == 'ALL' }
+            }
             environment {
                   NGINX_NODE = sh(script: "cd dev; terraform output  |  grep nginx | awk -F\\=  '{print \$2}'",returnStdout: true).trim()
                   PYTHON_NODE = sh(script: "cd dev; terraform output  |  grep python | awk -F\\=  '{print \$2}'",returnStdout: true).trim()                   
