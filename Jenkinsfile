@@ -98,8 +98,9 @@ pipeline {
                 script { 
                     sshagent (credentials : ['SSH-TO-TERRA-Nodes']) {
                         sh """                        
-                        ssh  -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo yum update -y; sudo pip3 install --upgrade pip3; pip3 install pytest; pytest /tmp/code/hello.py '
-                
+                        ssh  -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo yum update -y; sudo yum install -y python3-pip; pip3 install pytest; pytest /tmp/code/hello.py '
+                        sudo apt-get update -y
+                        
                         """                        
                     }
                     
