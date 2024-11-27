@@ -110,7 +110,7 @@ pipeline {
             success{
                 script {
                     echo "Success"
-                   /* withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
+                    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
                    //withEnv(["SLACK_TOKEN=${SLACK_TOKEN}"]) {
                         sh """
                         curl -X POST \
@@ -119,13 +119,13 @@ pipeline {
                         --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye`s Project 10 Pipeline build was SUCCESSFUL...yeah!!!"}'  \
                         https://slack.com//api/chat.postMessage 
                             """
-                            }*/
+                            }
                 }
             }
             failure{
                 script{
                     echo "Failed"
-                    /*withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
+                    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
                     //withEnv(["SLACK_TOKEN=${SLACK_TOKEN}"]) {
                         sh """
                         curl -X POST \
@@ -134,7 +134,7 @@ pipeline {
                         --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye`s Project 10 Pipeline build FAILED...Check"}'  \
                         https://slack.com//api/chat.postMessage 
                             """
-                            }*/
+                            }
                 }
             }
             always {
