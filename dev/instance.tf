@@ -1,5 +1,5 @@
 resource "aws_security_group" "week10_nginx_node_sg" {
-  name        = "week9_node_security"
+  name        = "week10_nginx_security"
   vpc_id      = "vpc-0e26d767ace1ef817"
 
   tags = {
@@ -32,7 +32,7 @@ resource "aws_security_group" "week10_nginx_node_sg" {
 }
 
 resource "aws_security_group" "week10_python_node_sg" {
-  name        = "week9_node_security"
+  name        = "week10_python_security"
   vpc_id      = "vpc-0e26d767ace1ef817"
 
   tags = {
