@@ -54,7 +54,7 @@ pipeline {
                         cd dev
                         ssh -o StrictHostKeyChecking=no ec2-user@${NGINX_NODE} 'sudo yum install -y nginx && sudo systemctl start nginx'
                         scp  -r -o StrictHostKeyChecking=no ../code ec2-user@${PYTHON_NODE}:/tmp
-                        ssh  -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo yum install python3 -y; sudo cp /tmp/code/python_app.service /etc/systemd/system; sudo systemctl daemon-reload; sudo systemctl restart python_app.service'
+                        ssh  -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'ls -ltar /tmp/code; sudo yum install python3 -y; sudo cp /tmp/code/python_app.service /etc/systemd/system; sudo systemctl daemon-reload; sudo systemctl restart python_app.service'
                         """
                         
                     }
