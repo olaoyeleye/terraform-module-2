@@ -45,12 +45,12 @@ pipeline {
             steps {
                 sh '''
                 cd dev
-                find ../code/hello.py -type f -exec echo "Python file (hello.py) exists"  || echo "Python file (hello.py) does not exist"
+                find ./code/hello.py -type f -exec echo "Python file (hello.py) exists"  || echo "Python file (hello.py) does not exist"
                 apt install python3-venv
                 python3 -m venv myenv
                 . myenv/bin/activate
                 pip install pytest
-                pytest ../code/hello.py
+                pytest ./code/hello.py
                 '''
             }
         } 
