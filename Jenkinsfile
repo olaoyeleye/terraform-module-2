@@ -5,7 +5,7 @@ pipeline {
         AWS_ACCESS_KEY_ID =  credentials ('AWS_ACCESS_KEY_ID')
     }
     parameters{
-        choice(choices:"ALL\nINFRA\nAPP\nDEV", description: "Pipeline branches options",name: "DEPLOY_OPTIONS")
+        choice(choices:"ALL\nINFRA\nAPP\nDEV\nTEST", description: "Pipeline branches options",name: "DEPLOY_OPTIONS")
     }
     stages {
         stage('Initialise terraform') {
@@ -38,6 +38,20 @@ pipeline {
                 '''
             }
         }
+        stage('Test python file before upload') {
+            when {
+                expression  { params.DEPLOY_OPTIONS == 'TEST' }
+            }
+            steps {
+                sh '''
+                cd dev
+                find /tmp/code/hello.py -type f -exec echo "Python file (hello.py) exists" \; || echo "Python file (hello.py) does not exist"
+                pip3 install pytest
+                pytest /tmp/code/hello.py
+                '''
+            }
+        } 
+
         stage ('Manage APP') {
             when {
                 expression  { params.DEPLOY_OPTIONS == 'APP' || params.DEPLOY_OPTIONS == 'ALL' }
