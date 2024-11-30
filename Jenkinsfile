@@ -45,7 +45,7 @@ pipeline {
             steps {
                 sh '''
                 cd dev
-                find /tmp/code/hello.py -type f -exec echo "Python file (hello.py) exists" \; || echo "Python file (hello.py) does not exist"
+                find /tmp/code/hello.py -type f -exec echo "Python file (hello.py) exists"  || echo "Python file (hello.py) does not exist"
                 pip3 install pytest
                 pytest /tmp/code/hello.py
                 '''
