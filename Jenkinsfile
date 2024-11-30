@@ -45,9 +45,12 @@ pipeline {
             steps {
                 sh '''
                 cd dev
-                find /tmp/code/hello.py -type f -exec echo "Python file (hello.py) exists"  || echo "Python file (hello.py) does not exist"
-                pip3 install pytest
-                pytest /tmp/code/hello.py
+                find ../code/hello.py -type f -exec echo "Python file (hello.py) exists"  || echo "Python file (hello.py) does not exist"
+                apt install python3-venv
+                python3 -m venv myenv
+                . myenv/bin/activate
+                pip install pytest
+                pytest ../code/hello.py
                 '''
             }
         } 
@@ -157,6 +160,8 @@ pipeline {
             deleteDir() 
             sh """
             echo "I have finished and cleaned up all repo created"
+            sudo rm -rf venv
+            sudo docker system prune -a --volumes -f
             """
             }
         }
