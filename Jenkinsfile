@@ -5,7 +5,7 @@ pipeline {
         AWS_ACCESS_KEY_ID =  credentials ('AWS_ACCESS_KEY_ID')
     }
     parameters{
-        choice(choices:"ALL\nINFRA\nAPP\nTEST", description: "Pipeline branches options",name: "DEPLOY_OPTIONS")
+        choice(choices:"ALL\nINFRA\nAPP\nTEST\nDESTROY", description: "Pipeline branches options",name: "DEPLOY_OPTIONS")
     }
     stages {
         stage('Initialise terraform') {
@@ -35,6 +35,18 @@ pipeline {
                 sh '''
                 cd dev
                 terraform apply -var 'node1=nginx' -var 'node2=python-node' -auto-approve
+                '''
+            }
+        }
+          
+        stage('Terraform Destroy ') {
+            when {
+                expression  { params.DEPLOY_OPTIONS == 'DESTROY' }
+            }
+            steps {
+                sh '''
+                cd dev
+                terraform destroy -var 'node1=nginx' -var 'node2=python-node' -auto-approve
                 '''
             }
         }
