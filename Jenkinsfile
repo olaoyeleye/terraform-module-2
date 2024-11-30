@@ -5,7 +5,7 @@ pipeline {
         AWS_ACCESS_KEY_ID =  credentials ('AWS_ACCESS_KEY_ID')
     }
     parameters{
-        choice(choices:"ALL\nINFRA\nAPP\n"DEV, description: "Pipeline branches options",name: "DEPLOY_OPTIONS")
+        choice(choices:"ALL\nINFRA\nAPP\nDEV", description: "Pipeline branches options",name: "DEPLOY_OPTIONS")
     }
     stages {
         stage('Initialise terraform') {
