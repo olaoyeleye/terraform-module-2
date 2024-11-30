@@ -5,7 +5,7 @@ pipeline {
         AWS_ACCESS_KEY_ID =  credentials ('AWS_ACCESS_KEY_ID')
     }
     parameters{
-        choice(choices:"DEV\nINFRA\nAPP\nALL", description: "Pipeline branches options",name: "DEPLOY_OPTIONS")
+        choice(choices:"ALL\nINFRA\nAPP\n"DEV, description: "Pipeline branches options",name: "DEPLOY_OPTIONS")
     }
     stages {
         stage('Initialise terraform') {
@@ -111,7 +111,7 @@ pipeline {
             success{
                 script {
                     echo "Success"
-                    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
+                /*    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
                    //withEnv(["SLACK_TOKEN=${SLACK_TOKEN}"]) {
                         sh """
                         curl -X POST \
@@ -120,13 +120,13 @@ pipeline {
                         --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye`s Project 10 Pipeline build was SUCCESSFUL...yeah!!!"}'  \
                         https://slack.com//api/chat.postMessage 
                             """
-                            }
+                            }*/
                 }
             }
             failure{
                 script{
                     echo "Failed"
-                    withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
+                 /*   withCredentials ([string (credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN')]) {
                     //withEnv(["SLACK_TOKEN=${SLACK_TOKEN}"]) {
                         sh """
                         curl -X POST \
@@ -135,14 +135,14 @@ pipeline {
                         --data '{"channel": "devops-masterclass-2024","text" : "Kunle Oyeleye`s Project 10 Pipeline build FAILED...Check"}'  \
                         https://slack.com//api/chat.postMessage 
                             """
-                            }
+                            }*/
                 }
             }
             always {
             echo 'I have finished'
             deleteDir() 
             sh """
-            rm -rf venv
+            echo "I have finished and cleaned up all repo created"
             """
             }
         }
