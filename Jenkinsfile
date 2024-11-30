@@ -172,8 +172,8 @@ pipeline {
             deleteDir() 
             sh """
             echo "I have finished and cleaned up all repo created"
-            sudo rm -rf venv
-            sudo docker system prune -a --volumes -f
+            rm -rf venv
+            docker system prune -a --volumes -f
             """
             }
         }
