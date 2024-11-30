@@ -50,6 +50,7 @@ pipeline {
                 script {
                     sshagent (credentials : ['SSH-TO-TERRA-Nodes']) {
                         sh """
+                        #test
                         cd dev
                         ssh -o StrictHostKeyChecking=no ec2-user@${NGINX_NODE} 'sudo yum install -y nginx && sudo systemctl start nginx'
                         scp  -r -o StrictHostKeyChecking=no ../code ec2-user@${PYTHON_NODE}:/tmp
