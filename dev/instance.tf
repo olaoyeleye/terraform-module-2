@@ -11,13 +11,13 @@ resource "aws_security_group" "week10_nginx_node_sg" {
     protocol = "tcp"
     cidr_blocks =  ["0.0.0.0/0"]
   }
-    ingress {
+  ingress {
     from_port = 8080
     to_port = 8080
     protocol = "tcp"
     cidr_blocks =  ["0.0.0.0/0"]
   }
-      ingress {
+  ingress {
     from_port = 80
     to_port = 80
     protocol = "tcp"
@@ -37,6 +37,12 @@ resource "aws_security_group" "week10_python_node_sg" {
 
   tags = {
     Name = "week10_python_node_sg"
+  }
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks =  ["0.0.0.0/0"]
   }
 
   ingress {
