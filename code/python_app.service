@@ -1,6 +1,6 @@
 [Unit]
 
 [Service]
-ExecStart=/bin/sh -c "nohup python3 ../code/hello.py"
+ExecStart=/bin/sh -c "nohup python3 /tmp/code/hello.py"
 Restart=always
 user=ec2-user
