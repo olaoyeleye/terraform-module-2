@@ -173,7 +173,6 @@ pipeline {
             sh """
             echo "I have finished and cleaned up all repo created"
             rm -rf venv
-            docker system prune -a --volumes -f
             """
             }
         }
