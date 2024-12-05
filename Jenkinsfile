@@ -73,8 +73,8 @@ pipeline {
             }
             environment {
                   NGINX_NODE = sh(script: "cd dev; terraform output  |  grep nginx | awk -F\\=  '{print \$2}'",returnStdout: true).trim()
-                  PYTHON_NODE = sh(script: "cd dev; terraform output  |  grep python-1 | awk -F\\=  '{print \$2}'",returnStdout: true).trim()        
-                  PYTHN_NODE = sh(script: "cd dev; terraform output  |  grep python-2 | awk -F\\=  '{print \$2}'",returnStdout: true).trim()        
+                  PYTHON_NODE_1 = sh(script: "cd dev; terraform output  |  grep python-1 | awk -F\\=  '{print \$2}'",returnStdout: true).trim()        
+                  PYTHON_NODE_2 = sh(script: "cd dev; terraform output  |  grep python-2 | awk -F\\=  '{print \$2}'",returnStdout: true).trim()        
            
             }
 
@@ -83,11 +83,11 @@ pipeline {
                     sshagent (credentials : ['SSH-TO-TERRA-Nodes']) {
                         sh """
                         cd dev
-                        ssh -o StrictHostKeyChecking=no ec2-user@${NGINX_NODE} 'sudo yum install -y nginx && sudo systemctl start nginx'
-                        scp  -r -o StrictHostKeyChecking=no ../code ec2-user@${PYTHON_NODE}:/tmp
-                        ssh  -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'ls -ltar /tmp/code; sudo yum install python3 -y; sudo cp /tmp/code/python_app.service /etc/systemd/system; sudo systemctl daemon-reload; sudo systemctl restart python_app.service'
+                        ssh -o StrictHostKeyChecking=no ec2-user@${NGINX_NODE_1} 'sudo yum install -y nginx && sudo systemctl start nginx'
+                        scp  -r -o StrictHostKeyChecking=no ../code ec2-user@${PYTHON_NODE_1}:/tmp
+                        ssh  -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE_2} 'ls -ltar /tmp/code; sudo yum install python3 -y; sudo cp /tmp/code/python_app.service /etc/systemd/system; sudo systemctl daemon-reload; sudo systemctl restart python_app.service'
                         
-                        scp  -r -o StrictHostKeyChecking=no ../code ec2-user@${PYTHN_NODE}:/tmp
+                        scp  -r -o StrictHostKeyChecking=no ../code ec2-user@${PYTHN_NODE_2}:/tmp
                         ssh  -o StrictHostKeyChecking=no ec2-user@${PYTHN_NODE} 'ls -ltar /tmp/code; sudo yum install python3 -y; sudo cp /tmp/code/python_app.service /etc/systemd/system; sudo systemctl daemon-reload; sudo systemctl restart python_app.service'
                         """
                         
@@ -127,14 +127,15 @@ pipeline {
                 expression  { params.DEPLOY_OPTIONS == 'APP' || params.DEPLOY_OPTIONS == 'ALL' }
             }
             environment {
-                PYTHON_NODE = sh(script: "cd dev; terraform output  |  grep python | awk -F\\=  '{print \$2}'",returnStdout: true).trim()        
-            }
+                PYTHON_NODE_1 = sh(script: "cd dev; terraform output  |  grep python-1 | awk -F\\=  '{print \$2}'",returnStdout: true).trim()        
+                PYTHON_NODE_2 = sh(script: "cd dev; terraform output  |  grep python-2 | awk -F\\=  '{print \$2}'",returnStdout: true).trim()  
+            } 
             steps {
                 script { 
                     sshagent (credentials : ['SSH-TO-TERRA-Nodes']) {
                         sh """                        
-                        ssh  -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE} 'sudo yum update -y; sudo yum install -y python3-pip; pip3 install pytest; pytest /tmp/code/hello.py '
-                        ssh  -o StrictHostKeyChecking=no ec2-user@${PYTHN_NODE} 'sudo yum update -y; sudo yum install -y python3-pip; pip3 install pytest; pytest /tmp/code/hello.py '
+                        ssh  -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE_1} 'sudo yum update -y; sudo yum install -y python3-pip; pip3 install pytest; pytest /tmp/code/hello.py '
+                        ssh  -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE_2} 'sudo yum update -y; sudo yum install -y python3-pip; pip3 install pytest; pytest /tmp/code/hello.py '
                         """                        
                     }
                     
