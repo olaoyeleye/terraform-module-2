@@ -6,11 +6,14 @@ module "second-machine" {
     source = "../techbleat-module"
     node_name = var.node2
 }
-
+module "third-machine" {
+    source = "../techbleat-module"
+    node_name = var.node3
+}
 
 variable "node1" {}
 variable "node2" {}
-
+variable "node3" {}
 
 
 
