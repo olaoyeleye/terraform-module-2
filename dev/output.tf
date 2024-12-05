@@ -2,9 +2,8 @@ output "nginx" {
     value =aws_instance.node1.public_dns
 }
 output "nginx-private" {
-    value =aws_instance.node1.private_dns
+    value =aws_instance.node1.private_ip
 }
-
 output "python-1" {
     value =aws_instance.node2.public_dns
 }
