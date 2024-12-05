@@ -84,3 +84,4 @@ resource "aws_instance" "node2" {
 }
 variable "node1" {}
 variable "node2" {}
+variable "node3" {}
