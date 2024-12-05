@@ -82,6 +82,16 @@ resource "aws_instance" "node2" {
     }
  
 }
+resource "aws_instance" "node3" {
+    ami  = "ami-0b4c7755cdf0d9219"
+    instance_type = "t2.micro"
+    key_name ="kensko-2"
+    security_groups =  [aws_security_group.week10_python_node_sg.name]
+    tags = {
+        Name  = var.node3
+    }
+ 
+}
 variable "node1" {}
 variable "node2" {}
 variable "node3" {}
