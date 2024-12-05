@@ -23,7 +23,7 @@ pipeline {
             steps {
                 sh '''
                 cd dev
-                terraform plan -var 'node1=nginx' -var 'node2=python-node'
+                terraform plan -var 'node1=nginx' -var 'node2=python-node-1' -var 'node3=python-node-2'
                 '''
             }
         }  
@@ -34,7 +34,7 @@ pipeline {
             steps {
                 sh '''
                 cd dev
-                terraform apply -var 'node1=nginx' -var 'node2=python-node' -auto-approve
+                terraform apply -var 'node1=nginx' -var 'node2=python-node-1' -var 'node3=python-node-2' -auto-approve
                 '''
             }
         }
@@ -46,7 +46,7 @@ pipeline {
             steps {
                 sh '''
                 cd dev
-                terraform destroy -var 'node1=nginx' -var 'node2=python-node' -auto-approve
+                terraform destroy -var 'node1=nginx' -var 'node2=python-node-1' -var 'node3=python-node-2' -auto-approve
                 '''
             }
         }
