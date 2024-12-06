@@ -18,6 +18,12 @@ resource "aws_security_group" "week10_nginx_node_sg" {
     cidr_blocks =  ["0.0.0.0/0"]
   }
   ingress {
+    from_port = 65432
+    to_port = 65432
+    protocol = "tcp"
+    cidr_blocks =  ["0.0.0.0/0"]
+  }
+  ingress {
     from_port = 80
     to_port = 80
     protocol = "tcp"
