@@ -49,7 +49,7 @@ resource "aws_security_group" "week10_python_node_sg" {
     from_port = 65432
     to_port = 65432
     protocol = "tcp" 
-    security_groups = ["${aws_security_group.week10_nginx_node_sg.id}"]
+    security_groups = [aws_security_group.week10_nginx_node_sg.id]
     #cidr_blocks =  ["${aws_instance.node1.private_ip}/32"]  #["0.0.0.0/0"]
   }
   egress  {
@@ -58,8 +58,18 @@ resource "aws_security_group" "week10_python_node_sg" {
     protocol = "-1"
     cidr_blocks =  ["0.0.0.0/0"]
   }
-  depends_on = [aws_security_group.week10_nginx_node_sg]
 }
+
+
+#resource "aws_route53_record" "domain_name" {
+#  zone_id = "xxx"
+#  name    = "kunle.click"
+#  type    = "A"
+#  ttl     = 300
+#  records = [aws_instance.node1.public_ip]
+#}
+
+
 
 resource "aws_instance" "node1" {
     ami  = "ami-0b4c7755cdf0d9219"
@@ -71,7 +81,6 @@ resource "aws_instance" "node1" {
     tags = {
         Name  = var.node1
     }
-    depends_on = [aws_security_group.week10_nginx_node_sg]
 }
 
 resource "aws_instance" "node2" {
@@ -82,7 +91,6 @@ resource "aws_instance" "node2" {
     tags = {
         Name  = var.node2
     }
-    depends_on = [aws_security_group.week10_nginx_node_sg, aws_instance.node1 ]
 }
 resource "aws_instance" "node3" {
     ami  = "ami-0b4c7755cdf0d9219"
@@ -92,7 +100,6 @@ resource "aws_instance" "node3" {
     tags = {
         Name  = var.node3
     }
-    depends_on = [aws_security_group.week10_nginx_node_sg, aws_instance.node1 ]
 }
 variable "node1" {}
 variable "node2" {}
