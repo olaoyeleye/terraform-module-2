@@ -48,7 +48,7 @@ resource "aws_security_group" "week10_python_node_sg" {
   ingress {
     from_port = 65432
     to_port = 65432
-    protocol = "tcp"
+    protocol = "tcp" 
     cidr_blocks =  ["${aws_instance.node1.public_dns}/32"] 
     #cidr_blocks =  ["${aws_instance.node1.private_ip}/32"]  #["0.0.0.0/0"]
   }
@@ -58,6 +58,7 @@ resource "aws_security_group" "week10_python_node_sg" {
     protocol = "-1"
     cidr_blocks =  ["0.0.0.0/0"]
   }
+  depends_on = [aws_security_group.week10_nginx_node_sg]
 }
 
 resource "aws_instance" "node1" {
