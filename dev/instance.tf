@@ -82,7 +82,7 @@ resource "aws_instance" "node2" {
     tags = {
         Name  = var.node2
     }
-    depends_on = [aws_security_group.week10_nginx_node_sg]
+    depends_on = [aws_security_group.week10_nginx_node_sg, aws_instance.node1 ]
 }
 resource "aws_instance" "node3" {
     ami  = "ami-0b4c7755cdf0d9219"
@@ -92,7 +92,7 @@ resource "aws_instance" "node3" {
     tags = {
         Name  = var.node3
     }
-    depends_on = [aws_security_group.week10_nginx_node_sg]
+    depends_on = [aws_security_group.week10_nginx_node_sg, aws_instance.node1 ]
 }
 variable "node1" {}
 variable "node2" {}
