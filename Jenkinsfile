@@ -86,6 +86,8 @@ pipeline {
                         echo "${PYTHON_NODE_1}"
                         echo "${PYTHON_NODE_2}"
                         cd dev
+                        echo "ssh -o StrictHostKeyChecking=no ec2-user@${NGINX_NODE} 'sudo yum install -y nginx && sudo systemctl start nginx'"
+                       
                         ssh -o StrictHostKeyChecking=no ec2-user@${NGINX_NODE} 'sudo yum install -y nginx && sudo systemctl start nginx'
                         scp  -r -o StrictHostKeyChecking=no ../code ec2-user@${PYTHON_NODE_1}:/tmp
                         ssh  -o StrictHostKeyChecking=no ec2-user@${PYTHON_NODE_1} 'ls -ltar /tmp/code; sudo yum install python3 -y; sudo cp /tmp/code/python_app.service /etc/systemd/system; sudo systemctl daemon-reload; sudo systemctl restart python_app.service'
