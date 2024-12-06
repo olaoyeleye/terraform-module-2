@@ -49,7 +49,7 @@ resource "aws_security_group" "week10_python_node_sg" {
     from_port = 65432
     to_port = 65432
     protocol = "tcp" 
-    cidr_blocks =  ["${aws_instance.node1.public_ip}/32", "${aws_instance.node1.public_ip}/32"] 
+    cidr_blocks =  ["${aws_instance.node1.public_ip}/32", "${aws_instance.node1.public_ip}/32", "${aws_instance.node1.public_ip}/32"] 
     #cidr_blocks =  ["${aws_instance.node1.private_ip}/32"]  #["0.0.0.0/0"]
   }
   egress  {
